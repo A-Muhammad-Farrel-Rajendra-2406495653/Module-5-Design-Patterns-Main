@@ -35,8 +35,8 @@ impl NotificationService {
             product_title: product.clone(). title,
             product_type: String::from(product_type),
             product_url: product.clone().get_url(),
-            subscriber_name: String :: from(""),
-            status: String :: from(status)
+            subscriber_name: String::from(""),
+            status: String::from(status)
         };
 
         let subscribers: Vec<Subscriber> = SubscriberRepository::list_all(product_type);
@@ -44,7 +44,7 @@ impl NotificationService {
             payload. subscriber_name = subscriber.clone().name;
             let subscriber_clone = subscriber. clone();
             let payload_clone = payload. clone();
-            thread::spawn (move | | subscriber_clone. update(payload_clone));
+            thread::spawn (move || subscriber_clone. update(payload_clone));
         }
     }
 }
