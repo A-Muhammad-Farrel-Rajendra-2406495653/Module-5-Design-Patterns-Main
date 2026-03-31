@@ -93,5 +93,20 @@ Tapi, Singleton tidak otomatis menjamin data objek Subscriber itu konsisten saat
 
 
 #### Reflection Publisher-2
+##### 1. In the Model-View Controller (MVC) compound pattern, there is no “Service” and “Repository”. Model in MVC covers both data storage and business logic. Explain based on your understanding of design principles, why we need to separate “Service” and “Repository” from a Model?
+Pemisahan Service dan Repository dari Model dilakukan untuk menerapkan Single responsiblity Principle dan memudahkan kita untuk me-maintain kode. 
+Model seharusnya hanya bertanggung jawab mendefinisikan skema data, sedangkan Service mengelola alur logika bisnis (seperti to_uppercase pada product_type) dan Repository mengisolasi detail mekanisme penyimpanan data (seperti DashMap). Dengan pemisahan ini, perubahan pada cara penyimpanan data tidak akan merusak logika bisnis, dan logika bisnis dapat diuji secara independen tanpa bergantung pada state penyimpanan.
+
+##### 2. What happens if we only use the Model? Explain your imagination on how the interactions between each model (Program, Subscriber, Notification) affect the code complexity for each model?
+Jika kita hanya menggunakan Model, setiap model akan menjadi sangat kompleks karena harus menangani validasi, logika bisnis, sekaligus operasi basis data secara bersamaan. 
+Interaksi antar model, seperti saat Notification perlu mencari daftar Subscriber untuk mengirim pesan, akan membuat model memiliki ketergantungan langsung (tight coupling) ke logika penyimpanan model lain. Dampaknya, akan ada satu file model berisi ratusan baris kode yang sulit dipahami, sulit diuji secara modular, dan rawan terjadi bug saat ada perubahan nantinya.
+
+
+##### 3. Have you explored more about Postman? Tell us how this tool helps you to test your current work. You might want to also list which features in Postman you are interested in or feel like it is helpful to help your Group Project or any of your future software engineering projects.
+Dalam proyek ini dan Postman Collection yang diberikan, Postman akan berperan menjadi klien dalam simulasi yang menguji fungsionalitas Publisher dan Receiver.
+Dengan Postman Collection yang diberikan, saya bisa memvalidasi alur Observer pattern mulai dari pembuatan produk, pendaftaran subscriber menggunakan metode POST dengan bodi JSON, hingga verifikasi penerimaan notifikasi pada endpoint `/receive`.
+Fitur Collections milik Postman juga membantu untuk mengorganisir berbagai request berdasarkan modul (Product, Notification, Receiver) serta kemampuan untuk menyertakan Raw JSON Body yang memudahkan pengujian struktur data kompleks seperti pada endpoint Subscribe to Type.
+Mungkin untuk proyek kelompok di masa depan, saya tertarik mengeksplorasi Variables (seperti {{base_url}}) untuk mempermudah penggantian host dari localhost ke server production,
+atau fitur Automated Testing untuk memastikan setiap perubahan kode tidak merusak endpoint yang sudah ada.
 
 #### Reflection Publisher-3
