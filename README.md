@@ -89,7 +89,7 @@ Penggunaan DashMap (dictionary) lebih cocok daripada Vec (list) karena:
 
 ##### 3. When programming using Rust, we are enforced by rigorous compiler constraints to make a thread-safe program. In the case of the List of Subscribers (SUBSCRIBERS) static variable, we used the DashMap external library for thread safe HashMap. Explain based on your understanding of design patterns, do we still need DashMap or we can implement Singleton pattern instead?  
 Singleton berperan sebagai pola desain yang memastikan suatu objek Subscriber hanya ada satu di memori, sehingga state dari suatu objek Subscriber itu konsisten di seluruh bagian BambangShop.
-Tapi, Singleton tidak otomatis menjamin data objek Subscriber itu konsisten saat diakses oleh banyak orang dalam satu waktu (tidak thread-safety). Maka dari itu, kita butuh DashMap untuk menjaga konsistensi data itu dengan memastikan hanya ada satu thread dalam satu waktu yang bisa memodisikasi data itu di memori.
+Tapi, Singleton tidak otomatis menjamin data objek Subscriber itu konsisten saat diakses oleh banyak orang dalam satu waktu (tidak thread-safety). Maka dari itu, kita butuh DashMap untuk menjaga konsistensi data itu dengan memastikan hanya ada satu thread dalam satu waktu yang bisa memodisikasi data itu di memori. Jadi, Singleton dan DashMap ini saling melengkapi.
 
 
 #### Reflection Publisher-2
