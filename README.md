@@ -110,3 +110,16 @@ Mungkin untuk proyek kelompok di masa depan, saya tertarik mengeksplorasi Variab
 atau fitur Automated Testing untuk memastikan setiap perubahan kode tidak merusak endpoint yang sudah ada.
 
 #### Reflection Publisher-3
+###### 1. Observer Pattern has two variations: Push model (publisher pushes data to subscribers) and Pull model (subscribers pull data from publisher). In this tutorial case, which variation of Observer Pattern that we use?
+Variasi yang digunakan dalam tutorial ini adalah Push model, terlihat dari  NotificationService yang secara aktif mengririmkan data dalam bentuk objek Notification terhadap setiap Subscriber setelah terjadi perubahan status pada produk.
+Itu terjadi lewat fungsi notify yang mengiterasi daftar subscriber dan langsung memanggil metode update dengan membawa payload data. Dalam model ini, subscriber bersifat pasif dan hanya menerima informasi yang telah ditentukan oleh publisher tanpa perlu melakukan permintaan data tambahan.
+
+###### 2.  What are the advantages and disadvantages of using the other variation of Observer Pattern for this tutorial case? (example: if you answer Q1 with Push, then imagine if we used Pull)
+Kalau menggunakan Pull model, keuntungan utamanya adalah efisiensi jaringan karena publisher hanya mengirimkan notifikasi perubahan minimal (misalnya hanya ID produk), sehingga subscriber memiliki kendali penuh untuk hanya mengambil data yang mereka butuhkan. 
+Tapi kerugiannya adalah kompleksitas kode akan meningkat karena subscriber harus melakukan request balik ke API publisher untuk mendapatkan detail produk, yang menyebabkan beban kerja tambahan pada server. 
+Selain itu, terdapat resiko state produk sudah berubah kembali saat subscriber baru akan menarik data, sehingga data yang diterima berpotensi tidak lagi sinkron dengan saat kejadian berlangsung.
+
+###### 3. Explain what will happen to the program if we decide to not use multi-threading in the notification process.
+Jika proses notifikasi tidak menggunakan multi-threading, program akan berjalan secara sinkron dan berurutan (blocking), yang berarti setiap pengiriman notifikasi via HTTP harus selesai sebelum beralih ke subscriber berikutnya. 
+Hal ini akan menyebabkan performa aplikasi menurun drastis dan meningkatkan waktu respon pada endpoint produk (seperti create, delete, atau publish) seiring bertambahnya jumlah subscriber. 
+Pengguna akan mengalami penundaan yang lama karena thread utama tertahan oleh proses I/O jaringan di dalam looping notifikasi, yang pada akhirnya dapat menyebabkan request timeout atau kegagalan sistem saat melayani banyak pengguna secara bersamaan.
